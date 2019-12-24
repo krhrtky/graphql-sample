@@ -14,6 +14,7 @@ type User {
   avatoar: String
   postedPhotos: [Photo!]!
   inPhotos: [Photo!]
+  friends: [FriendShip!]!
 }
 
 type Photo {
@@ -25,6 +26,12 @@ type Photo {
   category: PhotoCategory!
   postedBy: User!
   taggedUsers: [User!]!
+}
+
+type FriendShip {
+  friends: [User!]!
+  howLong: Int!
+  whereWeMet: Location
 }
 
 type Query {
