@@ -1,5 +1,13 @@
 scalar Datetime
 
+enum PhotoCategory {
+  SELFIE
+  PORTRAIT
+  ACTION
+  LANDSCAPE
+  GRAPHIC
+  }
+
 type Photo {
   id: ID!
   name: String!
