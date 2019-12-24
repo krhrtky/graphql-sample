@@ -24,3 +24,14 @@ type Photo {
   category: PhotoCategory!
   postedBy: User!
 }
+
+type Query {
+  totalPhotos: Int!
+  allPhotos: [Photo!]!
+  totalUsers: Int!
+  allUsdrs: [User!]!
+}
+
+schema {
+  query: Query
+}
