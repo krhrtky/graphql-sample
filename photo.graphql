@@ -13,6 +13,7 @@ type User {
   name: String
   avatoar: String
   postedPhotos: [Photo!]!
+  inPhotos: [Photo!]
 }
 
 type Photo {
@@ -23,6 +24,7 @@ type Photo {
   created: Datetime!
   category: PhotoCategory!
   postedBy: User!
+  taggedUsers: [User!]!
 }
 
 type Query {
