@@ -6,7 +6,13 @@ enum PhotoCategory {
   ACTION
   LANDSCAPE
   GRAPHIC
-  }
+}
+
+type User {
+  githubLogin: ID!
+  name: String
+  avatoar: String
+}
 
 type Photo {
   id: ID!
@@ -14,4 +20,6 @@ type Photo {
   url: String!
   description: String
   created: Datetime!
+  category: PhotoCategory!
+  postedBy: User!
 }
