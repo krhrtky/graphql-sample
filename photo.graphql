@@ -12,6 +12,7 @@ type User {
   githubLogin: ID!
   name: String
   avatoar: String
+  postedPhotos: [Photo!]!
 }
 
 type Photo {
