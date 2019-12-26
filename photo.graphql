@@ -39,6 +39,8 @@ type Query {
   allPhotos: [Photo!]!
   totalUsers: Int!
   allUsdrs: [User!]!
+  User(githubLogin: ID!): User!
+  Photo(id: ID!): Photo!
 }
 
 schema {
