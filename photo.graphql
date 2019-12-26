@@ -36,7 +36,7 @@ type FriendShip {
 
 type Query {
   totalPhotos: Int!
-  allPhotos: [Photo!]!
+  allPhotos(category: PhotoCategory): [Photo!]!
   totalUsers: Int!
   allUsdrs: [User!]!
   User(githubLogin: ID!): User!
