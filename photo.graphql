@@ -38,9 +38,10 @@ type Query {
   totalPhotos: Int!
   allPhotos(category: PhotoCategory): [Photo!]!
   totalUsers: Int!
-  allUsers: [User!]!
+  allUsers(first: Int=50 start: Int=0): [User!]!
   User(githubLogin: ID!): User!
   Photo(id: ID!): Photo!
+  allPhotos(first: Int=25 start: Int=0): [Photo!]!
 }
 
 schema {
