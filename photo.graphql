@@ -94,8 +94,13 @@ input PostPhotoInput {
     category: PhotoCategory=PORTRAIT
 }
 
+type AuthoPayload {
+  user: User!
+  token: String!
+}
 
 type Mutation {
   postPhoro(input: PostPhotoInput!): Photo!
+  githubAutho(code: String!): AuthoPayload!
 }
 
