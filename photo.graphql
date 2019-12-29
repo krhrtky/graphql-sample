@@ -66,10 +66,14 @@ schema {
 }
 
 
-type Mutation {
-  postPhoro(
+input PostPhotoInput {
     name: String!
     description: String
     category: PhotoCategory=PORTRAIT
-    ): Photo!
 }
+
+
+type Mutation {
+  postPhoro(input: PostPhotoInput!): Photo!
+}
+
