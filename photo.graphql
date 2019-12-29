@@ -42,11 +42,29 @@ input DataSort {
   sortBy: SortablePhotoField = created
 }
 
+"""
+.最低一度はGitHubで認可されたユーザー
+"""
 type User {
+  """
+  ユーザーの一位のGithHubログインID
+  """
   githubLogin: ID!
+  """
+  ユーザーの姓名
+  """
   name: String
+  """
+  ユーザーのGitHubプロフィール画像のURL
+  """
   avatoar: String
+  """
+  このユーザーが投稿した全写真
+  """
   postedPhotos(filter: PhotoFilter paging: DatePage sorting: DataSort): [Photo!]!
+  """
+  このユーザーが含まれる全写真
+  """
   inPhotos(filter: PhotoFilter paging: DataPage sorting: DataSort): [Photo!]
   friends: [FriendShip!]!
 }
@@ -85,12 +103,18 @@ type Query {
 schema {
   query: Query
   mutation: Mutation
+  subScription: SubScription
 }
 
-
+"""
+postPhotoで送信される入力
+"""
 input PostPhotoInput {
+    "新しい写真の名前"
     name: String!
+    "(optional)写真のかんたんな説明"
     description: String
+    "(optional)写真のカテゴリ"
     category: PhotoCategory=PORTRAIT
 }
 
@@ -100,7 +124,20 @@ type AuthoPayload {
 }
 
 type Mutation {
-  postPhoro(input: PostPhotoInput!): Photo!
-  githubAutho(code: String!): AuthoPayload!
+  postPhoro(
+      "input: 新しい写真の名前、説明、カテゴリ"
+      input: PostPhotoInput!
+  ): Photo!
+  """
+  GitHubユーザーで認可
+  """
+  githubAutho(
+      "ユーザーの認可のために送信されるGitHubの一意のコード"
+      code: String!
+  ): AuthoPayload!
 }
 
+type SubScription {
+  newPhoto(category: PhotoCategory): Photo!
+  newUser: User!
+}
