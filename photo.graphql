@@ -20,12 +20,34 @@ enum SortablePhotoField {
   created
 }
 
+input PhotoFilter {
+  category: PhotoCategory
+  createdBeteen: DateRange
+  taggedUsers: [ID!]
+  searchText
+}
+
+input DateRang {
+  start:Datetime!
+  end: DateTime!
+}
+
+input DataPage {
+  first: int = 25
+  start: int = 0
+}
+
+input DataSort {
+  sort: SortDirection = DESCENDING
+  sortBy: SortablePhotoField = created
+}
+
 type User {
   githubLogin: ID!
   name: String
   avatoar: String
-  postedPhotos: [Photo!]!
-  inPhotos: [Photo!]
+  postedPhotos(filter: PhotoFilter paging: DatePage sorting: DataSort): [Photo!]!
+  inPhotos(filter: PhotoFilter paging: DataPage sorting: DataSort): [Photo!]
   friends: [FriendShip!]!
 }
 
@@ -37,7 +59,7 @@ type Photo {
   created: Datetime!
   category: PhotoCategory!
   postedBy: User!
-  taggedUsers: [User!]!
+  taggedUsers(sorting: DataSort): [User!]!
 }
 
 type FriendShip {
@@ -50,13 +72,13 @@ type Query {
   totalPhotos: Int!
   allPhotos(category: PhotoCategory): [Photo!]!
   totalUsers: Int!
-  allUsers(first: Int=50 start: Int=0): [User!]!
+  allUsers(paging: DataPage sorting: DataSort): [User!]!
   User(githubLogin: ID!): User!
   Photo(id: ID!): Photo!
-  allPhotos(first: Int=25 start: Int=0): [Photo!]!
   allPhotos(
-    sort: SortDirection = DESCENDING
-    sortby: SortablePhotoField = created
+    filter: PhotoFilter
+    paging: DataPage
+    sorting: DataSort
     ): [Photo!]!
 }
 
