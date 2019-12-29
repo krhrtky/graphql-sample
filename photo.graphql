@@ -124,7 +124,7 @@ type AuthoPayload {
 }
 
 type Mutation {
-  postPhoro(
+  postPhoto(
       "input: 新しい写真の名前、説明、カテゴリ"
       input: PostPhotoInput!
   ): Photo!
