@@ -41,6 +41,9 @@ const resolvers = {
       return newPhoto;
     },
   },
+  Photo: {
+    url: parent => `http://yoursite.com/img/${parent.id}.jpg`,
+  },
 };
 
 const server = new ApolloServer({
