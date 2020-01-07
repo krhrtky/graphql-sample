@@ -109,11 +109,12 @@ const resolvers = {
   },
   // postPhotoミューテションと対応するリゾルバ
   Mutation: {
-    postPhoto(_, args) {
+    postPhoto(parent, args) {
       // 新しい写真情報を作成
       const newPhoto = {
         id: _id++,
         ...args.input,
+        created: new Date(),
       };
       photos.push(newPhoto);
       // 作成した写真情報を返す
