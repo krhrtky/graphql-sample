@@ -49,53 +49,7 @@ const photos = [
     created: '2018-04-15T19:09:57.308Z',
   },
 ];
-
-const resolvers = {
-  Query: {
-    // 写真を格納した配列の長さを返す
-    totalPhotos: () => photos.length,
-    allPhotos: () => photos,
-  },
-  // postPhotoミューテションと対応するリゾルバ
-  Mutation: {
-    postPhoto(parent, args) {
-      // 新しい写真情報を作成
-      const newPhoto = {
-        id: _id++,
-        ...args.input,
-        created: new Date(),
-      };
-      photos.push(newPhoto);
-      // 作成した写真情報を返す
-      return newPhoto;
-    },
-  },
-  Photo: {
-    url: parent => `http://yoursite.com/img/${parent.id}.jpg`,
-    postedBy: parent => users.find(u => u.githubUser === parent.githubLogin),
-    taggedUsers: parent =>
-      tags
-        .filter(tag => tag.photoID === parent.id)
-        .map(tag => tag.userID)
-        .map(userID => users.find(u => u.githubLogin === userID)),
-  },
-  User: {
-    postedPhotos: parent =>
-      photos.filter(p => p.githubUser === parent.githubLogin),
-    inPhotos: parent =>
-      tags
-        .filter(tag => tag.userID === parent.id)
-        .map(tag => tag.photoID)
-        .map(photoID => photos.find(p => p.id === photoID)),
-  },
-  DateTime: new GraphQLScalarType({
-    name: 'DateTime',
-    description: 'A valid date time value',
-    parseValue: value => new Date(value),
-    serialize: value => new Date(value).toISOString(),
-    parseLiteral: ast => ast.value,
-  }),
-};
+const resolvers = require('./resolvers');
 
 const server = new ApolloServer({
   typeDefs,
