@@ -3,67 +3,11 @@ const expressPlayground = require('graphql-playground-middleware-express')
   .default;
 const express = require('express');
 const { GraphQLScalarType } = require('graphql');
+const { readFileSync } = require('fs');
 
 const app = express();
 
-const typeDefs = `
-  scalar DateTime
-  type User {
-    """
-    ユーザーの一位のGithHubログインID
-    """
-    githubLogin: ID!
-    """
-    ユーザーの姓名
-    """
-    name: String
-    """
-    ユーザーのGitHubプロフィール画像のURL
-    """
-    avatoar: String
-    """
-    このユーザーが投稿した全写真
-    """
-    postedPhotos: [Photo!]!
-    inPhotos: [Photo!]!
-  }
-  enum PhotoCategory {
-    SELFIE
-    PORTRAIT
-    ACTION
-    LANDSCAPE
-    GRAPHIC
-  }
-
-  # 型定義
-  type Photo {
-    id: ID!
-    url: String!
-    name: String!
-    description: String
-    category: PhotoCategory!
-    postedBy: User!
-    taggedUsers: [User!]!
-    created: DateTime!
-  }
-
-  input PostPhotoInput {
-      "新しい写真の名前"
-      name: String!
-      "(optional)写真のかんたんな説明"
-      description: String
-      "(optional)写真のカテゴリ"
-      category: PhotoCategory=PORTRAIT
-  }
-
-  type Query {
-    totalPhotos: Int!
-    allPhotos(after: DateTime): [Photo!]!
-  }
-  type Mutation {
-    postPhoto(input: PostPhotoInput!): Photo!
-  }
-  `;
+const typeDefs = readFileSync('./typeDefs.graphql', 'UTF-8');
 
 const users = [
   { githubLogin: 'mHattup', name: 'Mike Hattrup' },
