@@ -44,8 +44,20 @@ const photos = [
 module.exports = {
   Query: {
     // 写真を格納した配列の長さを返す
-    totalPhotos: () => photos.length,
-    allPhotos: () => photos,
+    totalPhotos: (_, __, { db }) =>
+      db.collection('photos').estimatedDocumentCount(),
+    allPhotos: (_, __, { db }) =>
+      db
+        .collection('photos')
+        .find()
+        .toArray(),
+    totalUsers: (_, __, { db }) =>
+      db.collection('users').estimatedDocumentCount(),
+    allUsers: (_, __, { db }) =>
+      db
+        .collection('users')
+        .find()
+        .toArray(),
   },
   // postPhotoミューテションと対応するリゾルバ
   Mutation: {
